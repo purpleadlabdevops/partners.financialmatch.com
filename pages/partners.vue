@@ -2,7 +2,7 @@
   <section class="partners">
     <div class="container">
       <div class="partners__list">
-        <div class="partners__item" v-for="item in list">
+        <div class="partners__item" v-for="item in list.slice().reverse()">
           <h3>{{ item.firstName }} {{ item.lastName }}</h3>
           <p>email: <span>{{ item.email }}</span></p>
           <p>phone: <span>{{ item.phone }}</span></p>
@@ -33,7 +33,8 @@ export default {
 
 <style lang="scss" scoped>
 .partners{
-  padding-bottom: 100px;
+  padding-top: 60px;
+  padding-bottom: 60px;
   &__item{
     max-width: 500px;
     background: var(--bg-white);
