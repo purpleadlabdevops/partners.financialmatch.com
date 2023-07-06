@@ -51,7 +51,7 @@ app.route("/db")
       .catch(err => res.send({status: 'error', msg: err}))
   })
   .post((req, res) => {
-    db(`INSERT INTO partners (firstName, lastName, email, phone, notes) VALUES (${req.body.params.firstName}, ${req.body.params.lastName}, ${req.body.params.email}, ${req.body.params.phone}, ${req.body.params.notes})`)
+    db(`INSERT INTO partners (firstName, lastName, email, phone, notes) VALUES ('${req.body.params.firstName}', '${req.body.params.lastName}', '${req.body.params.email}', '${req.body.params.phone}', '${req.body.params.notes}')`)
       .then(rows => res.send(rows))
       .catch(err => res.send({status: 'error', msg: err}))
   })
