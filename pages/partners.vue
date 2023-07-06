@@ -1,7 +1,7 @@
 <template>
   <section class="partners">
     <div class="container">
-      <div class="partners__list">
+      <div class="partners__list" v-if="list">
         <div class="partners__item" v-for="item in list.slice().reverse()">
           <h3>{{ item.firstName }} {{ item.lastName }}</h3>
           <p>email: <span>{{ item.email }}</span></p>
