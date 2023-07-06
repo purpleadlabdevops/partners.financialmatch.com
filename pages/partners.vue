@@ -60,7 +60,8 @@ export default {
     color: var(--text-black);
     margin-bottom: 5px;
     span{
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 16px;
     }
   }
 }
