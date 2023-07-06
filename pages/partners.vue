@@ -43,6 +43,7 @@ export default {
     margin: 0 auto;
     position: relative;
     padding: 20px 15px;
+    margin-bottom: 30px;
   }
   h3{
     font-weight: 600;
