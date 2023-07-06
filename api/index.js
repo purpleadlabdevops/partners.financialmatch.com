@@ -2,44 +2,11 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   request = require('request'),
   nodemailer = require('nodemailer'),
-  app = express()
+  app = express(),
+  db = require('./db')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
-const lpAuth = Buffer.from(`${process.env.LP_KEY}:${process.env.LPS_KEY}`).toString('base64')
-app.post('/lp', (req, res) => {
-  request({
-    method: 'POST',
-    url: "https://financialmatch.leadspediatrack.com/post.do",
-    qs: req.body.params,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Basic ${lpAuth}`
-    }
-  }, (error, response, body) => {
-    if (error) throw new Error(error)
-    res.send(body)
-    const urlParams = new URLSearchParams(req.body.params).toString();
-    request({
-      method: 'get',
-      url: `https://hooks.zapier.com/hooks/catch/13692587/3uskego?${urlParams}`,
-    }, (error, response, body) => {
-      if (error) console.log(error)
-      console.log(body)
-    })
-  })
-})
-
-app.post('/hook', (req, res) => {
-  request({
-    method: 'get',
-    url: `https://hooks.zapier.com/hooks/catch/13692587/3oa9fu6/?name=${req.body.params.name}&email=${req.body.params.email}&phone=${req.body.params.phone}&transaction_id=${req.body.params.transaction_id}&fbp=${req.body.params.fbp}&fbc=${req.body.params.fbc}&gclid=${req.body.params.gclid}`,
-  }, (error, response, body) => {
-    if (error) throw new Error(error)
-    res.send(body)
-  })
-})
 
 app.post('/email', (req, res) => {
   const transporter = nodemailer.createTransport({
@@ -76,6 +43,18 @@ app.post('/email', (req, res) => {
       })
     })
 })
+
+app.route("/db")
+  .get((req, res) => {
+    db(`SELECT * FROM partners`)
+      .then(rows => res.send(rows))
+      .catch(err => res.send({status: 'error', msg: err}))
+  })
+  .post((req, res) => {
+    db(`INSERT INTO partners (firstName, lastName, email, phone, notes) VALUES (${req.body.params.firstName}, ${req.body.params.lastName}, ${req.body.params.email}, ${req.body.params.phone}, ${req.body.params.notes})`)
+      .then(rows => res.send(rows))
+      .catch(err => res.send({status: 'error', msg: err}))
+  })
 
 module.exports = {
   path: '/api',
