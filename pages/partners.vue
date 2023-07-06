@@ -36,7 +36,7 @@ export default {
   padding-top: 60px;
   padding-bottom: 60px;
   &__item{
-    max-width: 500px;
+    max-width: 400px;
     background: var(--bg-white);
     box-shadow: 0 0 16px var(--bg-gray);
     border-radius: 12px;
@@ -59,6 +59,9 @@ export default {
     line-height: 1.4;
     color: var(--text-black);
     margin-bottom: 5px;
+    span{
+      font-weight: 500;
+    }
   }
 }
 </style>
