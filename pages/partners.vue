@@ -34,8 +34,8 @@ export default {
 <style lang="scss" scoped>
 .partners{
   padding-bottom: 100px;
-  &--inner{
-    max-width: 700px;
+  &__item{
+    max-width: 500px;
     background: var(--bg-white);
     box-shadow: 0 0 16px var(--bg-gray);
     border-radius: 12px;
