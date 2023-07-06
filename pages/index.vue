@@ -55,21 +55,31 @@ export default {
       e.preventDefault()
       this.spinner = true
       console.dir(this.data)
-      setTimeout(()=>{
-        this.spinner = false
-        this.thanks = true
+      this.$axios.post(`${process.env.API}/email`, {
+        headers: { 'Content-Type': 'application/json' },
+        params: this.data
+      })
+        .then(res => {
+          console.dir(res.data)
 
-        setTimeout(()=> {
-          this.thanks = false
+          // send data to the DB
+        })
+        .catch(err => {
+          console.dir(err)
+        })
+        .finally(()=>{
+          this.spinner = false
+          this.thanks = true
           this.data.firstName = null
           this.data.lastName = null
           this.data.email = null
           this.data.phone = null
           this.data.notes = null
-        }, 5000)
-
-      }, 1000)
-    }
+          setTimeout(()=> {
+            this.thanks = false
+          }, 5000)
+        })
+    },
   }
 }
 </script>

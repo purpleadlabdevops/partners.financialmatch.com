@@ -52,14 +52,15 @@ app.post('/email', (req, res) => {
     }
   })
   transporter.sendMail({
-    from: '"Financial Match" <support@geekex.com',
-    to: `support@financialmatch.com`,
-    subject: `Contact form | Financial Match`,
+    from: '"Financial Match" <support@geekex.com>',
+    to: `referrals@financialmatch.com`,
+    subject: `Referral Partner Program | Financial Match`,
     html: `
-      <p>name: <strong>${req.body.params.name}</strong></p>
-      <p>company: <strong>${req.body.params.company}</strong></p>
-      <p>email: <strong>${req.body.params.email}</strong></p>
-      <p>phone: <strong>${req.body.params.phone}</strong></p>
+      <p>First name: <strong>${req.body.params.firstName}</strong></p>
+      <p>Last name: <strong>${req.body.params.lastName}</strong></p>
+      <p>Email: <strong>${req.body.params.email}</strong></p>
+      <p>Phone: <strong>${req.body.params.phone}</strong></p>
+      <p>Notes: <strong>${req.body.params.notes}</strong></p>
     `
   })
     .then(response => {

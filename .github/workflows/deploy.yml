@@ -19,7 +19,7 @@ jobs:
           username: root
           password: YRBENitB@{IXYwo?
           script: |
-            cd /var/www/site/data/www/financialmatch.com
+            cd /var/www/site/data/www/partners.financialmatch.com
             git pull
             npm run build
-            pm2 restart financialmatch.com
+            pm2 restart partners.financialmatch.com
