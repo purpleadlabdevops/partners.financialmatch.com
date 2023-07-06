@@ -54,15 +54,21 @@ export default {
     submit(e){
       e.preventDefault()
       this.spinner = true
-      console.dir(this.data)
-      this.$axios.post(`${process.env.API}/email`, {
+      this.$axios.post(`${process.env.API}/db`, {
         headers: { 'Content-Type': 'application/json' },
         params: this.data
       })
-        .then(res => {
-          console.dir(res.data)
-
-          // send data to the DB
+        .then(dbResult => {
+          console.log('dbResult----------')
+          console.dir(dbResult)
+          this.$axios.post(`${process.env.API}/email`, {
+            headers: { 'Content-Type': 'application/json' },
+            params: this.data
+          })
+        })
+        .then(emailResult => {
+          console.log('emailResult----------')
+          console.dir(emailResult)
         })
         .catch(err => {
           console.dir(err)
