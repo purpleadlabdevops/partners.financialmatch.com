@@ -25,7 +25,7 @@ export default {
       headers: { 'Content-Type': 'application/json' },
     })
       .then(dbResult => {
-        this.list = JSON.parse(dbResult)
+        this.list = dbResult
       })
   }
 }
