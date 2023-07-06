@@ -61,7 +61,7 @@ export default {
         .then(dbResult => {
           console.log('dbResult----------')
           console.dir(dbResult)
-          this.$axios.post(`${process.env.API}/email`, {
+          return this.$axios.post(`${process.env.API}/email`, {
             headers: { 'Content-Type': 'application/json' },
             params: this.data
           })
