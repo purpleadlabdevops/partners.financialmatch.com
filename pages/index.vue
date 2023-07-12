@@ -15,12 +15,23 @@
           <div class="field">
             <input type="email" v-model="data.email" id="email" placeholder="Email" required />
           </div>
-          <FieldTel />
+          <!-- <FieldTel /> -->
+          <div class="field">
+            <input
+              type="tel"
+              placeholder="(###) ###-####"
+              v-model="data.phone"
+              @input="phoneInput"
+              minlength="14"
+              maxlength="14"
+              id="phone"
+              required>
+          </div>
           <div class="field">
             <textarea type="email" v-model="data.notes" id="notes" placeholder="Notes" />
           </div>
           <div class="field">
-            <input type="submit" value="Submit" :disabled="spinner || notValid" />
+            <input type="submit" value="Submit" :disabled="spinner" />
           </div>
         </form>
         <div class="spinner" v-if="spinner">
@@ -51,6 +62,13 @@ export default {
     }
   },
   methods: {
+    phoneInput(e) {
+      let arr = this.data.phone.replace(/[^\dA-Z]/g, '').replace(/[\s]/g, '').split('');
+      if (arr.length > 0) arr.splice(0, 0, '(');
+      if (arr.length > 4) arr.splice(4, 0, ') ');
+      if (arr.length > 8) arr.splice(8, 0, '-');
+      this.data.phone = arr.toString().replace(/[,]/g, '');
+    },
     submit(e){
       e.preventDefault()
       this.spinner = true
