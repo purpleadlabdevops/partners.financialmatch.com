@@ -44,8 +44,8 @@ export default {
       })
   },
   beforeCreate(){
-    if(this.$route.query.password !== 'partners!#$%@'){
-      // this.$router.go(-1)
+    if(this.$route.query.password !== '@111partners111@'){
+      this.$router.go(-1)
     }
   }
 }
