@@ -1,6 +1,5 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
-  request = require('request'),
   nodemailer = require('nodemailer'),
   app = express(),
   db = require('./db')
