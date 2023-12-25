@@ -9,6 +9,7 @@
           <p>Referral Company Name: <span>{{ item.referralCompanyName }}</span></p>
           <p>Referral Email: <span>{{ item.referralEmail }}</span></p>
           <p>Referral Phone: <span>{{ item.referralPhone }}</span></p>
+          <button @click="remove(item.ID)">×</button>
         </div>
       </div>
     </div>
@@ -22,6 +23,18 @@ export default {
       list: null,
     }
   },
+  methods: {
+    remove(id){
+      this.$axios.post(`${process.env.API}/db-remove`, {
+        headers: { 'Content-Type': 'application/json' },
+        params: {id: id}
+      })
+        .then(dbResult => {
+          console.dir(dbResult);
+          window.location.reload(true)
+        })
+    }
+  },
   mounted(){
     this.$axios.get(`${process.env.API}/db`, {
       headers: { 'Content-Type': 'application/json' },
@@ -32,7 +45,7 @@ export default {
   },
   beforeCreate(){
     if(this.$route.query.password !== 'partners!#$%@'){
-      this.$router.go(-1)
+      // this.$router.go(-1)
     }
   }
 }
@@ -70,6 +83,21 @@ export default {
       font-weight: 600;
       font-size: 16px;
     }
+  }
+  button{
+    background: var(--brand-red);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--text-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 20px;
   }
 }
 </style>

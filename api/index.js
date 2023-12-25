@@ -56,6 +56,13 @@ app.route("/db")
       .catch(err => res.send({status: 'error', msg: err}))
   })
 
+app.route("/db-remove")
+  .post((req, res) => {
+    db(`DELETE FROM users WHERE ID=${req.body.params.id}`)
+      .then(rows => res.send(rows))
+      .catch(err => res.send({status: 'error', msg: err}))
+  })
+
 module.exports = {
   path: '/api',
   handler: app,
