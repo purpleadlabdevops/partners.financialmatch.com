@@ -3,10 +3,12 @@
     <div class="container">
       <div class="partners__list" v-if="list">
         <div class="partners__item" v-for="item in list.slice().reverse()">
-          <h3>{{ item.firstName }} {{ item.lastName }}</h3>
-          <p>email: <span>{{ item.email }}</span></p>
-          <p>phone: <span>{{ item.phone }}</span></p>
-          <p>notes: <span>{{ item.notes }}</span></p>
+          <h3>{{ item.referrerName }}</h3>
+          <p>Referrer Phone: <span>{{ item.referrerPhone }}</span></p>
+          <p>Referrer Email: <span>{{ item.referrerEmail }}</span></p>
+          <p>Referral Company Name: <span>{{ item.referralCompanyName }}</span></p>
+          <p>Referral Email: <span>{{ item.referralEmail }}</span></p>
+          <p>Referral Phone: <span>{{ item.referralPhone }}</span></p>
         </div>
       </div>
     </div>
@@ -27,6 +29,11 @@ export default {
       .then(dbResult => {
         this.list = dbResult.data
       })
+  },
+  beforeCreate(){
+    if(this.$route.query.password !== 'partners!#$%@'){
+      this.$router.go(-1)
+    }
   }
 }
 </script>

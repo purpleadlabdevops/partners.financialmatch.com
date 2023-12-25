@@ -46,12 +46,13 @@ app.post('/email', (req, res) => {
 
 app.route("/db")
   .get((req, res) => {
-    db(`SELECT * FROM partners`)
+    db(`SELECT * FROM users`)
       .then(rows => res.send(rows))
       .catch(err => res.send({status: 'error', msg: err}))
   })
   .post((req, res) => {
-    db(`INSERT INTO partners (firstName, lastName, email, phone, notes) VALUES ('${req.body.params.firstName}', '${req.body.params.lastName}', '${req.body.params.email}', '${req.body.params.phone}', '${req.body.params.notes}')`)
+    // db(`INSERT INTO partners (firstName, lastName, email, phone, notes) VALUES ('${req.body.params.firstName}', '${req.body.params.lastName}', '${req.body.params.email}', '${req.body.params.phone}', '${req.body.params.notes}')`)
+    db(`INSERT INTO users (referrerName,referrerPhone,referrerEmail,referralCompanyName,referralEmail,referralPhone) VALUES ('${req.body.params.referrerName}','${req.body.params.referrerPhone}','${req.body.params.referrerEmail}','${req.body.params.referralCompanyName}','${req.body.params.referralEmail}','${req.body.params.referralPhone}')`)
       .then(rows => res.send(rows))
       .catch(err => res.send({status: 'error', msg: err}))
   })

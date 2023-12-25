@@ -7,28 +7,61 @@
         <p>A representative from our team will be in touch to share more details on our program options.</p>
         <form class="quiz--form" @submit.prevent="submit">
           <div class="field">
-            <input type="text" v-model="data.firstName" id="firstname" placeholder="First name" required />
+            <label for="referrerName">Referrer name*</label>
+            <input
+              type="text"
+              v-model="data.referrerName"
+              id="referrerName"
+              placeholder="ex.John Doe"
+              required />
           </div>
           <div class="field">
-            <input type="text" v-model="data.lastName" id="lastname" placeholder="Last name" required />
-          </div>
-          <div class="field">
-            <input type="email" v-model="data.email" id="email" placeholder="Email" required />
-          </div>
-          <!-- <FieldTel /> -->
-          <div class="field">
+            <label for="referrerPhone">Referrer phone*</label>
             <input
               type="tel"
               placeholder="(###) ###-####"
-              v-model="data.phone"
-              @input="phoneInput"
+              v-model="data.referrerPhone"
+              @input="phoneInput('referrerPhone', $event)"
               minlength="14"
               maxlength="14"
-              id="phone"
-              required>
+              id="referrerPhone"
+              required />
           </div>
           <div class="field">
-            <textarea type="email" v-model="data.notes" id="notes" placeholder="Notes" />
+            <label for="referrerEmail">Referrer email*</label>
+            <input
+              type="email"
+              v-model="data.referrerEmail"
+              placeholder="ex.example@gmail.com"
+              id="referrerEmail"
+              required />
+          </div>
+          <div class="field">
+            <label for="referralCompanyName">Referral company name</label>
+            <input
+              type="text"
+              v-model="data.referralCompanyName"
+              id="referralCompanyName"
+              placeholder="ex.Financial Match" />
+          </div>
+          <div class="field">
+            <label for="referralEmail">Referral email</label>
+            <input
+              type="text"
+              v-model="data.referralEmail"
+              id="referralEmail"
+              placeholder="ex.example@gmail.com" />
+          </div>
+          <div class="field">
+            <label for="referralPhone">Referral contact number</label>
+            <input
+              type="tel"
+              placeholder="(###) ###-####"
+              v-model="data.referralPhone"
+              @input="phoneInput('referralPhone', $event)"
+              minlength="14"
+              maxlength="14"
+              id="referralPhone" />
           </div>
           <div class="field">
             <input type="submit" value="Submit" :disabled="spinner" />
@@ -50,11 +83,12 @@ export default {
   data(){
     return{
       data: {
-        firstName: null,
-        lastName: null,
-        email: null,
-        phone: null,
-        notes: null,
+        referrerName: null,
+        referrerPhone: null,
+        referrerEmail: null,
+        referralCompanyName: null,
+        referralEmail: null,
+        referralPhone: null,
       },
       spinner: false,
       notValid: true,
@@ -62,15 +96,23 @@ export default {
     }
   },
   methods: {
-    phoneInput(e) {
-      let arr = this.data.phone.replace(/[^\dA-Z]/g, '').replace(/[\s]/g, '').split('');
+    phoneInput(modelName, e) {
+      let arr = this.data[modelName].replace(/[^\dA-Z]/g, '').replace(/[\s]/g, '').split('');
       if (arr.length > 0) arr.splice(0, 0, '(');
       if (arr.length > 4) arr.splice(4, 0, ') ');
       if (arr.length > 8) arr.splice(8, 0, '-');
-      this.data.phone = arr.toString().replace(/[,]/g, '');
+      this.data[modelName] = arr.toString().replace(/[,]/g, '');
+    },
+    emailCheck(email){
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+      return regex.test(email)
     },
     submit(e){
       e.preventDefault()
+      if( this.data.referrerName.length < 2 || this.data.referrerPhone.length < 14 || !this.emailCheck(this.data.referrerEmail) ){
+        alert('Plese check required fields')
+        return
+      }
       this.spinner = true
       this.$axios.post(`${process.env.API}/db`, {
         headers: { 'Content-Type': 'application/json' },
